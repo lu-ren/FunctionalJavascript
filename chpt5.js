@@ -41,7 +41,6 @@ const reverseString = str => {
 console.log(reverseString("HELLOWORLD"));
 
 // Emulating map() with reduce()
-
 const map = (arr, f) => arr.reduce((ac, v) => ac.concat(f(v)), [])
 const dup = x => 2 * x;
 console.log(map(array, dup));
@@ -61,7 +60,6 @@ console.log(delinquent);
 console.log(delinquent.map( x => x.id ));
 
 // Emulating filter() with reduce()
-
 const filter = (arr, f) => arr.reduce((ac, v) =>
     f(v) ? ac.concat(v) : ac, []);
 
@@ -82,5 +80,23 @@ let divBlock = `<div><ul>\n${listedHtml(characters, x => x.name)}\n</ul></div>`;
 console.log(divBlock);
 
 // Basic non-descending range
-range = (x, y) => new Array(y - x).fill(0).map( (v, i) => x + i);
+range = (x, y) => new Array(y - x).fill(0).map((v, i) => x + i);
 console.log(range(1, 10));
+
+extendedRange = (x, y, z = 1) => new Array(Math.ceil(Math.abs(y - x) / z)).fill(0).map((v, i) => x + Math.sign(y - x) * z * i);
+console.log(extendedRange(10, 1));
+console.log(extendedRange(3, 9));
+console.log(extendedRange(20, 1, 3));
+
+const alphabet = range('A'.charCodeAt(), 'Z'.charCodeAt() + 1)
+    .map(x => String.fromCharCode(x));
+console.log(alphabet);
+
+const data = [[1,2,3,4], [5,6,7,8], [9,10,11,12]];
+
+const toCSV = d => d.map(
+        r => r.map(x => x.toString()).join(',')
+    )
+    .join('\n');
+
+console.log(toCSV(data));
