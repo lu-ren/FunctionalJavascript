@@ -90,19 +90,19 @@ const memoize = fn => {
     return x => (x in cache ? cache[x] : (cache[x] = fn(x)));
 };
 
-// Correct solution, where all of the internal results are cached
-
-console.log('Correct memoized fib');
-const memoizedFib = memoize(fib);
+// Incorrect use of memoization. All intermediate calculation is not cached, only the end result
+console.log('Incorrect memoized fib');
+const memoizedFib = memoize(x => fib(x));
 addTiming(memoizedFib)(45);
 addTiming(memoizedFib)(45);
 addTiming(memoizedFib)(40);
 addTiming(memoizedFib)(35);
 
-// Incorrect use of memoization. All intermediate calculation is not cached, only the end result
-console.log('Incorrect memoized fib');
-const memoizedFib2 = memoize(x => fib(x));
-addTiming(memoizedFib2)(45);
-addTiming(memoizedFib2)(45);
-addTiming(memoizedFib2)(40);
-addTiming(memoizedFib2)(35);
+// Correct use of memoization. Note that fib was reassigned to memoized(fib)
+fib = memoize(fib);
+console.log('Correct memoized fib');
+const testFib = x => fib(x);
+addTiming(testFib)(45);
+addTiming(testFib)(45);
+addTiming(testFib)(40);
+addTiming(testFib)(35);
