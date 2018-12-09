@@ -106,3 +106,17 @@ addTiming(testFib)(45);
 addTiming(testFib)(45);
 addTiming(testFib)(40);
 addTiming(testFib)(35);
+
+// Follow up question, how do we memoize fib without reassigning it?
+
+// Extended memoization for functions with multiple arity
+const extendedMemoization = fn => {
+    let cache = {};
+    const PRIMITIVES = ['number', 'string', 'boolean'];
+
+    return (...args) => {
+        const strX = args.length == 1 && PRIMITIVES.includes(typeof args[0]): args[0] ? JSON.stringify(args);
+
+        return strX in cache ? cache[strX] : (cache[strX] = fn(...args));
+    };
+};
