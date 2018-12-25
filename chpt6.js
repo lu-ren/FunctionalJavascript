@@ -52,3 +52,38 @@ const some = (arr, fn) =>
     arr.reduce((ac, v) => ac || fn(v), false);
 
 console.log( some(markers, v => v.lat > 0 && v.lon > 0 ));
+
+// Randomizer (chpt 6 question 6.3) - higher-order funciton which receives variable number of functions as argument
+// Returns a new function that will, on each call, randomly call one of the input functions
+// This is useful as a load balancer for instance
+
+const randomizer = (...fn) => fn[ Math.floor(Math.random() * fn.length) ];
+const sum1 = x => x + 1;
+const sum2 = x => x + 2;
+const sum3 = x => x + 3;
+
+const randomSum = randomizer(sum1, sum2, sum3);
+
+console.log( `randomSum: ${randomSum(0)}` )
+
+// Randomizer which ensures no function is called twice in a row
+
+const randomizer2 = (...fn) => {
+    let indices = [...Array(fn.length).keys()];
+
+    return (i) => {
+        if (indices.length == 0)
+            return;
+
+        const index = indices.splice(Math.floor(Math.random() * indices.length), 1);
+
+        return fn[index](i);
+    };
+};
+
+const randomSum2 = randomizer2(sum1, sum2, sum3);
+
+console.log( `randomSum2: ${randomSum2(0)}` )
+console.log( `randomSum2: ${randomSum2(0)}` )
+console.log( `randomSum2: ${randomSum2(0)}` )
+console.log( `randomSum2: ${randomSum2(0)}` )

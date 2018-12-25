@@ -24,3 +24,14 @@ let averageLat2 = average(markers.map(getField('lat')));
 let averageLon2 = average(markers.map(getField('lon')));
 
 console.log(`avg_lat: ${averageLat2}, avg_lon: ${averageLon2}`);
+
+// getField implementation will fail if obj input is null
+const getField2 = attr => obj => (obj == null ? obj : obj[attr]);
+
+const testObj = {
+    A: 1,
+    B: 2
+};
+
+console.log(getField2('A')(testObj));
+console.log(getField2('A')(null));
